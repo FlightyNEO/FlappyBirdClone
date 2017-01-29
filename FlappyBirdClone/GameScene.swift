@@ -55,7 +55,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.createWalls()
             })
             
-            let delay = SKAction.wait(forDuration: 3.5)
+            let delay = SKAction.wait(forDuration: 2.0)
             let spawnDelay = SKAction.sequence([spawn, delay])
             let spawnDelayForever = SKAction.repeatForever(spawnDelay)
             run(spawnDelayForever)
@@ -131,13 +131,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if firstBody.categoryBitMask == PhysicsCategory.score && secondBody.categoryBitMask == PhysicsCategory.ghost {
             
-            score += 1
+            score += 10
             scoreLabel.text = "\(score)"
             firstBody.node?.removeFromParent()
             
         } else if firstBody.categoryBitMask == PhysicsCategory.ghost && secondBody.categoryBitMask == PhysicsCategory.score {
             
-            score += 1
+            score += 10
             scoreLabel.text = "\(score)"
             secondBody.node?.removeFromParent()
             
@@ -215,6 +215,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         topWall.physicsBody?.contactTestBitMask = PhysicsCategory.ghost
         topWall.physicsBody?.affectedByGravity = false
         topWall.physicsBody?.isDynamic = false
+        topWall.zRotation = CGFloat(M_PI)
         
         bottomWall.physicsBody = SKPhysicsBody(rectangleOf: topWall.size)
         bottomWall.physicsBody?.categoryBitMask = PhysicsCategory.wall
@@ -222,8 +223,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bottomWall.physicsBody?.contactTestBitMask = PhysicsCategory.ghost
         bottomWall.physicsBody?.affectedByGravity = false
         bottomWall.physicsBody?.isDynamic = false
-        
-        topWall.zRotation = CGFloat(M_PI)
         
         wallPair.addChild(topWall)
         wallPair.addChild(bottomWall)
